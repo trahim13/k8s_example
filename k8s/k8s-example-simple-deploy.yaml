@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-example-simple
+  labels:
+    app: k8s-example-simple
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25      #сколько можем поднять дополнительно процентов
+      maxUnavailable: 25 #сколько может быть не доступно процентов
+  progressDeadlineSeconds: 100 #сколько в секундах ждать, чтобы признать, что деплоймент не удачный
+  minReadySeconds: 0 # сколько ждать и не крешить под (например, прогреть кэши, или медленный старт)
+  selector:
+    matchLabels:
+      app: k8s-example-simple
+  template:
+    metadata:
+      name: k8s-example-simple
+      labels:
+        app: k8s-example-simple
+      annotations:
+          my-rollout/rollout-version: "4" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
+    spec:
+      containers:
+        - name: k8s-example-simple
+          image: k8s-example-simple:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+              name: http
+          startupProbe: #проверяет, запущено ли приложение внутри контейнера
+            httpGet:
+              path:  /actuator/health
+              port: http
+            timeoutSeconds: 1 # esli time out - to proba failed
+            periodSeconds: 5 # как часто запускать пробу
+            failureThreshold: 6 # через какое количество запросов считать, что проба упала (то есть, через periodSeconds*failureThreshold мы поймем, что проба упала)
+            terminationGracePeriodSeconds: 1 # сколько ждать, после того, как проба упала и отправлен поду сигнал terminate, когда проба упала, чтобы потом послать kill
+          livenessProbe: #живо ли приложение (уничтожает контейнер и пытается повторно развернуть его если фэйл)
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+
+          readinessProbe: #готов ли сервис принимать трафик (if failed state, then Kubernetes removes the IP address for the container from the endpoints of all Services), будет 3 пода, но реди 2
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+      terminationGracePeriodSeconds: 100    #сколько ждать пода, чтобы все контейнеры в нем terminate
+      restartPolicy: Always
+
