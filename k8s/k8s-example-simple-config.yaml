@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: k8s-example-simple-config
 data:
-  app.custom.message: "Hello: custom message from config map: envFrom:configMapKeyRef"
+  app.custom.message: "Hello: custom message from config map: Configuration Trees"

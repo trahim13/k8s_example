@@ -24,6 +24,11 @@ spec:
       annotations:
           my-rollout/rollout-version: "5" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
     spec:
+      volumes:
+        - name: container-config
+          configMap:
+            name: k8s-example-simple-config
+            optional: false
       containers:
         - name: k8s-example-simple
           image: k8s-example-simple:latest
@@ -31,9 +36,10 @@ spec:
           ports:
             - containerPort: 8081
               name: http
-          envFrom:
-               - configMapRef:
-                   name: k8s-example-simple-config
+          volumeMounts:
+            - mountPath: /app/config/
+              name: container-config
+              readOnly: true
           startupProbe: #проверяет, запущено ли приложение внутри контейнера
             httpGet:
               path:  /actuator/health
