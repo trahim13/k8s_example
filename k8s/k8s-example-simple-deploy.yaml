@@ -33,7 +33,10 @@ spec:
               name: http
           env:
             - name: APP_CUSTOM_MESSAGE
-              value: "Hello: custom message from env variable"
+              valueFrom:
+                configMapKeyRef:
+                  key: app.custom.message
+                  name: k8s-example-simple-config
           startupProbe: #проверяет, запущено ли приложение внутри контейнера
             httpGet:
               path:  /actuator/health
