@@ -31,12 +31,9 @@ spec:
           ports:
             - containerPort: 8081
               name: http
-          env:
-            - name: APP_CUSTOM_MESSAGE
-              valueFrom:
-                configMapKeyRef:
-                  key: app.custom.message
-                  name: k8s-example-simple-config
+          envFrom:
+               - configMapRef:
+                   name: k8s-example-simple-config
           startupProbe: #проверяет, запущено ли приложение внутри контейнера
             httpGet:
               path:  /actuator/health
