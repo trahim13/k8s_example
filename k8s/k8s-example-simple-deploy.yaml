@@ -24,6 +24,9 @@ spec:
       annotations:
           my-rollout/rollout-version: "6" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
     spec:
+#      initContainers:
+#        - name:
+#          image:
       volumes:
         - name: container-config
           configMap:
