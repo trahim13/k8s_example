@@ -14,8 +14,16 @@ public class Simple {
     @Value("${app.custom.message}")
     private String customMessage;
 
+    @Value("${app.custom.secret}")
+    private String secretValue;
+
     @GetMapping("/")
     public String simple() {
         return customMessage;
+    }
+
+    @GetMapping("/secret")
+    public String simpleSecret() {
+        return secretValue;
     }
 }
