@@ -22,7 +22,7 @@ spec:
       labels:
         app: k8s-example-simple
       annotations:
-          my-rollout/rollout-version: "6" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
+          my-rollout/rollout-version: "8" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
     spec:
 #      initContainers:
 #        - name:
