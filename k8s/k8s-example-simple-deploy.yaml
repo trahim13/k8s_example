@@ -22,7 +22,7 @@ spec:
       labels:
         app: k8s-example-simple
       annotations:
-          my-rollout/rollout-version: "8" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
+          my-rollout/rollout-version: "1" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
     spec:
 #      initContainers:
 #        - name:
@@ -43,9 +43,6 @@ spec:
             - mountPath: /app/config/
               name: container-config
               readOnly: true
-          envFrom:
-               - secretRef:
-                   name: k8s-example-simple #создано через консоль
           startupProbe: #проверяет, запущено ли приложение внутри контейнера
             httpGet:
               path:  /actuator/health
@@ -66,6 +63,6 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 10
             failureThreshold: 3
-      terminationGracePeriodSeconds: 100    #сколько ждать пода, чтобы все контейнеры в нем terminate
+      terminationGracePeriodSeconds: 0    #сколько ждать пода, чтобы все контейнеры в нем terminate
       restartPolicy: Always
 

@@ -6,6 +6,6 @@ spec:
   selector:
     app: k8s-example-simple
   ports:
-    - port: 8080
+    - port: 8081
       name: http
-  type: ClusterIP
+  type: LoadBalancer
