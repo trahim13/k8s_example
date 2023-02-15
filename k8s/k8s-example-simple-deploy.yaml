@@ -5,7 +5,7 @@ metadata:
   labels:
     app: k8s-example-simple
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -22,7 +22,7 @@ spec:
       labels:
         app: k8s-example-simple
       annotations:
-          my-rollout/rollout-version: "1" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
+          my-rollout/rollout-version: "2" #можно изменить например для rolling update (служебная информация, никто на неё не должен завязываться)
     spec:
 #      initContainers:
 #        - name:

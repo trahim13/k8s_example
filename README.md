@@ -7,3 +7,7 @@ kubectl describe secret k8s-example-simple -n demo
 kubectl get secret/k8s-example-simple -o json -n demo
 
 kubectl port-forward deploy/k8s-example-simple -n demo 8080:8081
+
+
+NodePort
+![img.png](img.png)
