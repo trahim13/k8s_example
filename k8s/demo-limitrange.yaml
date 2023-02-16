@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-demo-limit-range
+spec:
+  limits:
+    - type: Container
+      min:
+        cpu: "400m"
+      max:
+        cpu: "2000m"
+        memory: "1Gi"
+      default:
+        cpu: "500m"
+        memory: "250Mi"
+      defaultRequest:
+        cpu: "500m"
