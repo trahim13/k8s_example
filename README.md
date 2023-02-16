@@ -11,3 +11,10 @@ kubectl port-forward deploy/k8s-example-simple -n demo 8080:8081
 
 NodePort
 ![img.png](img.png)
+
+Ingress
+![img_1.png](img_1.png)
+
+
+
+helm install nginx ingress-nginx/ingress-nginx -f nginx/values-local.yaml
