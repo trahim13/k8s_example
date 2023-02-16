@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: default-demo-resource-quota
+spec:
+  hard:
+    requests.cpu: "10"
+    requests.memory: '10Gi'
+    limits.cpu: "20"
+    limits.memory: "15Gi"
+#    pods: "10"
