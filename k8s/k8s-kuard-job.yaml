@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kuard-keygen
+spec:
+  parallelism: 1
+  completions: 10
+  template:
+    metadata:
+      labels:
+        chapter: jobs
+    spec:
+      containers:
+        - name: kuard-keygen
+          image: gcr.io/kuar-demo/kuard-amd64:2
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--keygen-enable"
+            - "--keygen-exit-on-complete"
+            - "--keygen-num-to-gen=10"
+      restartPolicy: OnFailure
