@@ -27,6 +27,16 @@ spec:
 #      initContainers:
 #        - name:
 #          image:
+      affinity:
+        podAntiAffinity:                                  #на одном хосте не может быть пода с тем же app label
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - k8s-example-simple
       volumes:
         - name: container-config
           configMap:

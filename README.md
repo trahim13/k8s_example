@@ -18,3 +18,6 @@ Ingress
 
 
 helm install nginx ingress-nginx/ingress-nginx -f nginx/values-local.yaml
+
+Assigning Pods to Nodes
+https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
